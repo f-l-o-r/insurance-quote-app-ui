@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:8080/insurance'
-
+const url =  'http://localhost:8080/insurance';
 
 interface Vehicle {
     vehicleType: string,
@@ -32,6 +31,8 @@ interface Vehicle {
     insuranceOption: InsuranceOption
   }
 
+
+  console.log('url '+ url)
 export const fetchInsurances = () => axios.get(url);
 export const createInsurance = (newInsuranceQuote: any) => axios.post(url+'/quote', newInsuranceQuote);
 

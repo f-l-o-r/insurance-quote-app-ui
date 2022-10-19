@@ -40,6 +40,7 @@ const InsuranceOptions  = () => {
         try {
             const { data } = await api.getOptions();
             setOptions(data);
+            
           } catch (error: any) {
             console.log(error.message);
           }
@@ -58,8 +59,6 @@ const InsuranceOptions  = () => {
         setUserData({...userData,  ['insuranceOption']: body});
     }
     
-
-    console.log(userData);
     return (
         <div className="container  mx-auto">
             <section className=" text-gray-800 text-center lg:text-left">
@@ -68,6 +67,7 @@ const InsuranceOptions  = () => {
                         options.map((insOption: InsuranceOption, key) => (
                             <button 
                             key={key}
+                            id={insOption.optionType}
                             onClick={() => handleChange(insOption)}
                             className="shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover mb-6 bg-position p-10 focus:bg-green-200" data-mdb-ripple="true" data-mdb-ripple-color="light">
                                 <h5 className="text-lg font-bold mb-3">{insOption.tittle}</h5>
