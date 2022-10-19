@@ -81,7 +81,6 @@ const StepperPage = () => {
       if(direction === "confirm"){
         createInsurance();
       }
-      
       direction === "next" || direction === "confirm" ? newStep ++ : newStep --;
       newStep> 0 && newStep <= steps.length && setCurrentStep(newStep);
   
