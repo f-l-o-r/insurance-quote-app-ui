@@ -1,0 +1,11 @@
+.stepper-button{
+    @apply  hover:bg-slate-700 hover:text-white transition duration-200 ease-in-out py-2 px-4 rounded-xl font-semibold cursor-pointer;
+}
+
+.back-button{
+    @apply bg-white text-slate-400  border-2 border-slate-300;
+}
+
+.next-button{
+    @apply bg-green-500 text-white;
+}

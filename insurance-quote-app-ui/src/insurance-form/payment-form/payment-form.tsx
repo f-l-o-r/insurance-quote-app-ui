@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { StepperContext } from "../../stepper-component/stepper-context";
+import StepperControl from "../../stepper-component/stepper-control";
 
-const PaymentForm  = () => {
+const PaymentForm  = ({handleClick, currentStep, steps}: any) => {
     const {userData, setUserData} : any = useContext(StepperContext);
     const [paymentData, setPaymentData] : any = useState('');
 
@@ -13,8 +14,15 @@ const PaymentForm  = () => {
         console.log(userData);
     }
 
+    const submitFormData = (e: any) => {
+        e.preventDefault();
+        handleClick(currentStep === steps.length -1 ? "confirm": "next");
+      };
+    
+
     return (
         <div className="insurance-form">
+            <form onSubmit={submitFormData}>
                 <h2 className='header-form'>Payment detail</h2>
                 <p className="text-center text-xl my-2 text-red-600">{`${userData.insuranceOption.quotePerMonth}$`}</p>
                 <div className="grid-form">
@@ -26,7 +34,7 @@ const PaymentForm  = () => {
                 <div className="grid-form">
                     <label htmlFor="cardHolder">Card holder</label>
                     <div className="div-input">
-                        <input onChange={handleChange} value ={paymentData["cardHolder"]||""} type="text" id="cardHolder" name="cardHolder" placeholder="name"></input>
+                        <input onChange={handleChange} value ={paymentData["cardHolder"]||""} type="text" id="cardHolder" name="cardHolder" placeholder="name" required></input>
                     </div>
                 </div>
                 <div className="grid-form">
@@ -34,23 +42,27 @@ const PaymentForm  = () => {
                         Car number
                     </label>
                     <div className="div-input">
-                        <input onChange={handleChange} value ={paymentData["carNumber"]||""} type="text" name="carNumber" id="carNumber" placeholder="0000 0000 0000 0000" ></input>
+                        <input onChange={handleChange} value ={paymentData["carNumber"]||""} type="text" name="carNumber" id="carNumber" placeholder="0000 0000 0000 0000" required ></input>
                     </div>
                 </div>
 
                 <div className="grid-form">
                     <label htmlFor="expDate">Expiration date</label>
                     <div className="div-input">
-                        <input onChange={handleChange} value ={paymentData["expDate"]||""} type="date" id="expDate" name="expDate"></input>
+                        <input onChange={handleChange} value ={paymentData["expDate"]||""} type="date" id="expDate" name="expDate" required></input>
                     </div>
                 </div>
 
                 <div className="grid-form">
                     <label htmlFor="secCode">Security code</label>
                     <div className="div-input">
-                        <input onChange={handleChange} value ={paymentData["secCode"]||""} type="text" id="secCode" name="secCode" placeholder="000"></input>
+                        <input onChange={handleChange} value ={paymentData["secCode"]||""} type="text" id="secCode" name="secCode" placeholder="000" required></input>
                     </div>
                 </div>
+                {currentStep !== steps.length &&
+                    <StepperControl handleClick={handleClick} currentStep={currentStep} steps={steps}></StepperControl>
+                }
+            </form>
         </div>
     )
 

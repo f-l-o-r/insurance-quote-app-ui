@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { StepperContext } from "../../stepper-component/stepper-context";
 import * as api from '../../service/connection-api';
+import StepperControl from "../../stepper-component/stepper-control";
 
 interface  Details  {
     description: string,
@@ -27,10 +28,11 @@ interface InsuranceOptionBody {
     quotePerMonth: number
 }
 
-const InsuranceOptions  = () => {
+const InsuranceOptions  = ({handleClick, currentStep, steps}: any) => {
 
     const [options, setOptions] = useState([]);
     const {userData, setUserData} : any = useContext(StepperContext);
+    const [insOptionData, setInsOptionData] : any = useState();
 
     useEffect(() => {
         getOptions();
@@ -53,15 +55,22 @@ const InsuranceOptions  = () => {
             optionType: insOption.optionType,
             coverPercentage: insOption.coverPercentage,
             base: insOption.base,
-            quotePerMonth: (userData.vehicle.cost * (insOption.coverPercentage / 100) )/ 12
+            quotePerMonth: Math.round(((userData.vehicle.cost * (insOption.coverPercentage / 100) )/ 12)*100)/100 
         }
-
+        setInsOptionData(body);
         setUserData({...userData,  ['insuranceOption']: body});
     }
+
+    const submitFormData = (e: any) => {
+        e.preventDefault();
+        if(insOptionData){
+            handleClick(currentStep === steps.length -1 ? "confirm": "next");
+        }
+      };
     
     return (
         <div className="container  mx-auto">
-            <section className=" text-gray-800 text-center lg:text-left">
+            <form className=" text-gray-800 text-center lg:text-left" onSubmit={submitFormData}>
                 <div className="grid sm:grid-cols-3 gap-x-10 ">
                     {
                         options.map((insOption: InsuranceOption, key) => (
@@ -88,8 +97,14 @@ const InsuranceOptions  = () => {
                         ))
                     }
                 </div>
-
-            </section>
+                <div className="text-center text-red-500">
+                    {!insOptionData? (<label id="lblValidationAlert" >Please select an option</label>): ""}
+                </div>
+                {currentStep !== steps.length &&
+                    <StepperControl handleClick={handleClick} currentStep={currentStep} steps={steps}></StepperControl>
+                }
+                
+            </form>
         </div>
     )
 }

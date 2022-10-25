@@ -1,20 +1,17 @@
-
+import './stepper-control.scss';
 
 const StepperControl = ({handleClick, currentStep, steps}: any) => {
     return (
         <div className="container flex justify-around mt-4 mb-8">
-            <button 
+            <button type="submit"
             onClick={()=>handleClick()}
-            className={`bg-white text-slate-400 py-2 px-4 rounded-xl font-semibold cursor-pointer border-2 border-slate-300 
-            hover:bg-slate-700 hover:text-white transition duration-2oo ease-in-out ${
+            className={`stepper-button back-button ${
                 currentStep === 1? "opacity-50 cursor-not-allowed": ""
             }`}>
                 back
             </button>
-            <button 
-            onClick={()=>handleClick(currentStep === steps.length -1 ? "confirm": "next")}
-            className="bg-green-500 text-white py-2 px-4 rounded-xl font-semibold cursor-pointer 
-            hover:bg-slate-700 hover:text-white transition duration-2oo ease-in-out ">
+            <button type="submit"
+            className="stepper-button next-button">
                 {currentStep === steps.length -1 ? "Confirm": "Next"}
             </button>
         </div>

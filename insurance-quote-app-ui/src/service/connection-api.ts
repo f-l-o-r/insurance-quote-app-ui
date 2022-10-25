@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url =  'http://localhost:8080/insurance';
+// const url =  +'';
 
 interface Vehicle {
     vehicleType: string,
@@ -31,11 +31,8 @@ interface Vehicle {
     insuranceOption: InsuranceOption
   }
 
-
-  console.log('url '+ url)
-export const fetchInsurances = () => axios.get(url);
-export const createInsurance = (newInsuranceQuote: any) => axios.post(url+'/quote', newInsuranceQuote);
-
-export const getProducts = () => axios.get(url + '/products');
-export const getOptions = () => axios.get(url + '/options');
-export const getPrice = (value:string) => axios.get(url + `/price/${value}`);
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || '';
+export const createInsurance = (newInsuranceQuote: any) => axios.post('/quote', newInsuranceQuote);
+export const getProducts = () => axios.get('/products');
+export const getOptions = () => axios.get('/options');
+export const getPrice = (value:string) => axios.get(`/price/${value}`);
